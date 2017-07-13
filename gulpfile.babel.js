@@ -24,7 +24,7 @@ gulp.task('development', ['scripts', 'styles'], () => {
         }
     });
 
-    gulp.watch('./src/style/*.scss', ['styles', browserSync.reload]);
+    gulp.watch('./src/*/*.scss', ['styles', browserSync.reload]);
     gulp.watch('./src/js/*.js', ['scripts']);
     gulp.watch('./*.html', browserSync.reload);
 });
