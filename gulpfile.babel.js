@@ -1,4 +1,3 @@
-import critical from 'critical';
 import babelify from 'babelify';
 import browserSync from 'browser-sync';
 import browserify from 'browserify';
@@ -78,67 +77,8 @@ gulp.task('styles', () => {
         .pipe(browserSync.stream());
 });
 
-
-/* ----------------- */
-/* HTML
-/* ----------------- */
-
-gulp.task('html', ['cssmin'], () => {
-    return gulp.src('index.html')
-        .pipe(critical.stream({
-            'base': 'build/',
-            'inline': true,
-            'extract': true,
-            'minify': true,
-            'css': ['./css/style.css']
-        }))
-        .pipe(gulp.dest('build'));
-});
-
-
-/* ----------------- */
-/* Cssmin
-/* ----------------- */
-
-gulp.task('cssmin', () => {
-    return gulp.src('./src/style/*.scss')
-        .pipe(plugins().sass({
-            'outputStyle': 'compressed'
-        }).on('error', plugins().sass.logError))
-        .pipe(gulp.dest('./build/css/'));
-});
-
-
-/* ----------------- */
-/* Jsmin
-/* ----------------- */
-
-gulp.task('jsmin', () => {
-    var envs = plugins().env.set({
-        'NODE_ENV': 'production'
-    });
-
-    return browserify({
-        'entries': ['./client/scripts/main.js'],
-        'debug': false,
-        'transform': [
-            babelify.configure({
-                'presets': ['es2015']
-            })
-        ]
-    })
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(envs)
-    .pipe(buffer())
-    .pipe(plugins().uglify())
-    .pipe(envs.reset)
-    .pipe(gulp.dest('./build/js/'));
-});
-
 /* ----------------- */
 /* Taks
 /* ----------------- */
 
 gulp.task('default', ['development']);
-gulp.task('deploy', ['html', 'jsmin']);
