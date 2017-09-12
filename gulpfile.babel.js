@@ -56,9 +56,6 @@ gulp.task('scripts', () => {
         this.emit('end');
     })
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(plugins().sourcemaps.init({'loadMaps': true}))
-    .pipe(plugins().sourcemaps.write('.'))
     .pipe(gulp.dest('./build/js/'))
     .pipe(browserSync.stream());
 });
