@@ -3,6 +3,7 @@ import browserSync from 'browser-sync';
 import browserify from 'browserify';
 import buffer from 'vinyl-buffer';
 import gulp from 'gulp';
+import autoprefixer from 'gulp-autoprefixer';
 import plugins from 'gulp-load-plugins';
 import source from 'vinyl-source-stream';
 import "babel-polyfill"; 
@@ -68,6 +69,7 @@ gulp.task('scripts', () => {
 gulp.task('styles', () => {
     return gulp.src('./src/style/*.scss')
         .pipe(plugins().sourcemaps.init())
+        .pipe(autoprefixer())
         .pipe(plugins().sass().on('error', plugins().sass.logError))
         .pipe(plugins().sourcemaps.write())
         .pipe(gulp.dest('./build/css/'))
